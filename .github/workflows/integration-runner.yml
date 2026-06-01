@@ -1,0 +1,27 @@
+name: Automated ERP Integration Verification CI
+
+on:
+  push:
+    branches: [ main, apex ]
+  pull_request:
+    branches: [ main, apex ]
+
+jobs:
+  automation_test_suite:
+    name: 🧪 Run Automated Integration Verification Matrix
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Fetch Code from Workbench Repository
+        uses: actions/checkout@v4
+
+      - name: Initialize Isolated Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Execute Operational Boundary Assertions
+        run: |
+          echo "Starting custom automation validation suite..."
+          python -m unittest discover -s tests -p "test_*.py"
+          echo "All boundary isolation checks passed beautifully!"
